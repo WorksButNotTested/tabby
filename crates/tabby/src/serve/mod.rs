@@ -131,7 +131,9 @@ fn should_download_ggml_files(device: &Device) -> bool {
 pub async fn main(config: &Config, args: &ServeArgs) {
     valid_args(args);
 
-    if args.device != Device::ExperimentalHttp {
+    if std::env::var("TABBY_OFFLINE").is_ok() {
+        warn!("Running in off-line mode. Hope you already downloaded the model!")
+    } else if args.device != Device::ExperimentalHttp {
         download_model(&args.model, &args.device).await;
         if let Some(chat_model) = &args.chat_model {
             download_model(chat_model, &args.device).await;
