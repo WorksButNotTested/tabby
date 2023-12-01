@@ -21,6 +21,9 @@ RUN apt-get update && \
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
+RUN rustup install 1.73.0
+RUN rustup default 1.73.0
+
 WORKDIR /root/workspace
 COPY . .
 
